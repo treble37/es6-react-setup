@@ -8,4 +8,4 @@
 `npm start`
 
 # Open
-open your browser and go to `localhost:3333`
+open your browser and go to `http://localhost:3333`
