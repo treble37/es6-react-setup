@@ -6,6 +6,4 @@
 
 # Start
 `npm start`
-
-# Open
-open your browser and go to [localhost:3333](http://localhost:3333)
+open your browser and go to [localhost:3333](http://localhost:3333){:target="_blank"}
