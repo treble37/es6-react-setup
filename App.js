@@ -2,10 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <ColorBox red={255} green={0} blue={0}/>
+        <ColorBox red={0} green={255} blue={0}/>
+        <ColorBox red={0} green={0} blue={255}/>
+      </div>
+    )
+  }
+}
+
+class ColorBox extends React.Component {
   constructor(){
     super();
-    this.state = {red: 0, blue: 120, green: 255}
     this.update = this.update.bind(this)
+  }
+  componentWillMount(){
+    this.setState({
+      red: this.props.red,
+      green: this.props.green,
+      blue: this.props.blue
+    })
   }
   update(e){
     this.setState({
