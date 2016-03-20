@@ -2,12 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class App extends React.Component {
+  constructor(){
+    super();
+    this.state = {boxes: []}
+  }
+  addColorBox() {
+    this.setState({numBoxes: this.state.boxes.push(this.state.boxes.length)})
+  }
+  deleteColorbox(index,e) {
+    this.setState({boxes: [...this.state.boxes.slice(0,index), ...this.state.boxes.slice(index+1)] })
+  }
+  renderColorBoxes() {
+    return this.state.boxes.map((box,index) => {
+      return <ColorBox key={box} name={box} deleteMe={this.deleteColorbox.bind(this,index)}/>
+    })
+  }
   render() {
     return (
       <div>
-        <ColorBox red={255} green={0} blue={0}/>
-        <ColorBox red={0} green={255} blue={0}/>
-        <ColorBox red={0} green={0} blue={255}/>
+        <button onClick={this.addColorBox.bind(this)}>Add Color Box</button>
+        {this.renderColorBoxes()}
       </div>
     )
   }
@@ -16,14 +30,11 @@ class App extends React.Component {
 class ColorBox extends React.Component {
   constructor(){
     super();
+    this.state = {red:0, green:0, blue:0}
     this.update = this.update.bind(this)
   }
   componentWillMount(){
-    this.setState({
-      red: this.props.red,
-      green: this.props.green,
-      blue: this.props.blue
-    })
+    this.setState(this.props);
   }
   update(e){
     this.setState({
@@ -37,6 +48,7 @@ class ColorBox extends React.Component {
       <div>
         <div style={{border:'1px solid black', width:'100px', height:'100px', backgroundColor:'rgb('+this.state.red+','+this.state.green+','+this.state.blue+')'}}>
         </div>
+        <button onClick={this.props.deleteMe}>Delete</button><br/>
         <Slider ref="red" value={this.state.red} update={this.update}/>
         {this.state.red}<br/>
         <Slider ref="green" value={this.state.green} update={this.update}/>
@@ -56,12 +68,8 @@ class Slider extends React.Component {
   }
 }
 
-App.propTypes = {
-  txt: React.PropTypes.string,
-  cat: React.PropTypes.number.isRequired
-}
 
 ReactDOM.render(
-  <App txt="this is the props text" cat={0}/>,
+  <App />,
   document.getElementById('app')
 );
